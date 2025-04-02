@@ -1,37 +1,46 @@
-// Import necessary hooks and components from react-router-dom and other libraries.
-import { Link, useParams } from "react-router-dom";  // To use link for navigation and useParams to get URL parameters
-import PropTypes from "prop-types";  // To define prop types for this component
-import rigoImageUrl from "../assets/img/rigo-baby.jpg"  // Import an image asset
-import useGlobalReducer from "../hooks/useGlobalReducer";  // Import a custom hook for accessing the global state
+import { Link, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { StoreContext } from "../store";
 
-// Define and export the Single component which displays individual item details.
-export const Single = props => {
-  // Access the global state using the custom hook.
-  const { store } = useGlobalReducer()
+export const Single = () => {
+  const { state } = useContext(StoreContext);
+  const { theId } = useParams();
+  
+  // Convertimos `theId` a número para hacer la comparación correcta con `id`
+  const singleCharacter = state.people.find(character => character.id === theId);
 
-  // Retrieve the 'theId' URL parameter using useParams hook.
-  const { theId } = useParams()
-  const singleTodo = store.todos.find(todo => todo.id === parseInt(theId));
+  if (!singleCharacter) {
+    return <div className="container text-center"><h2>Personaje no encontrado.</h2></div>;
+  }
+
+  const { name, height, mass, hair_color, skin_color, eye_color, birth_year, gender, imageUrl } = singleCharacter;
 
   return (
-    <div className="container text-center">
-      {/* Display the title of the todo element dynamically retrieved from the store using theId. */}
-      <h1 className="display-4">Todo: {singleTodo?.title}</h1>
-      <hr className="my-4" />  {/* A horizontal rule for visual separation. */}
+    <div className="container text-center mt-4">
+      <h1 className="display-4 text-warning">{name}</h1>
 
-      {/* A Link component acts as an anchor tag but is used for client-side routing to prevent page reloads. */}
+      {/* Imagen del personaje con manejo de error */}
+      <img 
+        src={imageUrl} 
+        alt={name} 
+        style={{ width: '300px', height: 'auto', borderRadius: '8px', boxShadow: "0px 0px 10px rgba(255,255,255,0.5)" }}
+        onError={(e) => e.target.src = "https://starwars-visualguide.com/assets/img/placeholder.jpg"} 
+      />
+
+      <div className="mt-3 text-light">
+        <h3>Detalles</h3>
+        <p><strong>Altura:</strong> {height}</p>
+        <p><strong>Masa:</strong> {mass}</p>
+        <p><strong>Color de cabello:</strong> {hair_color}</p>
+        <p><strong>Color de piel:</strong> {skin_color}</p>
+        <p><strong>Color de ojos:</strong> {eye_color}</p>
+        <p><strong>Año de nacimiento:</strong> {birth_year}</p>
+        <p><strong>Género:</strong> {gender}</p>
+      </div>
+
       <Link to="/">
-        <span className="btn btn-primary btn-lg" href="#" role="button">
-          Back home
-        </span>
+        <span className="btn btn-warning btn-lg mt-3">Volver al inicio</span>
       </Link>
     </div>
   );
-};
-
-// Use PropTypes to validate the props passed to this component, ensuring reliable behavior.
-Single.propTypes = {
-  // Although 'match' prop is defined here, it is not used in the component.
-  // Consider removing or using it as needed.
-  match: PropTypes.object
 };

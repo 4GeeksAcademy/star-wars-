@@ -1,0 +1,32 @@
+/* Estilo para el título "Star Wars" similar al de la película */
+h1 {
+    color: #f9e100;  /* Amarillo brillante */
+    font-family: 'Star Jedi', sans-serif; /* Fuente similar a la de Star Wars */
+    text-align: center;
+    font-size: 4rem;  /* Tamaño más grande */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    text-shadow: 
+      0 0 5px #fff,    /* Brillo blanco alrededor del texto */
+      0 0 10px #fff,   /* Brillo más fuerte alrededor */
+      0 0 15px #f9e100, /* Sombra amarilla */
+      0 0 20px #f9e100,
+      0 0 30px #f9e100;
+  }
+  
+  body {
+    background-color: #000;  /* Fondo negro para resaltar el texto */
+    color: #fff;  /* Color de texto blanco */
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  h2 {
+    color: #f9e100;  /* Amarillo */
+    font-family: 'Arial', sans-serif;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
